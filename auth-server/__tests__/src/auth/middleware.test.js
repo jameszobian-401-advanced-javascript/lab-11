@@ -40,6 +40,9 @@ describe('Auth Middleware', () => {
 
       return middleware(req, res, next)
         .then(() => {
+          expect(req).toHaveProperty('user')
+          expect(req).toHaveProperty('username', 'admin')
+          expect(req).toHaveProperty('token')
           expect(next).toHaveBeenCalledWith(errorObject);
         });
 

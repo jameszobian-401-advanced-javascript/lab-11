@@ -5,7 +5,7 @@ const User = require('./users-model.js');
 module.exports = (req, res, next) => {
 
   try {
-    let authorization = req.headers.authorization || '';
+  
     let [authType, encodedString] = req.headers.authorization.split(/\s+/);
 
     // BASIC Auth  ... Authorization:Basic ZnJlZDpzYW1wbGU=
@@ -38,11 +38,12 @@ if (!password) {
 
   async function _authenticate(user) {
     if ( user ) {
+      req.token = user.generateToken();
       req.user = user;
       next();
     }
     else {
-     return _authError('User not found');
+     await _authError();
     }
   }
 

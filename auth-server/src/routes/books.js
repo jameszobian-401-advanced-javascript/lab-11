@@ -2,12 +2,16 @@
 
 const express = require('express');
 const router = express.Router();
-const users = new mongoose.Schema({
-  username: {type: String, required: true, unique: true},
-  password: {type: String, required: true},
-  email: {type: String},
-  role: {type: String, required:true, default:'user', enum:['admin','editor','user'] },
-});
+const auth = require('../auth/middleware')
+
+router.use(auth);
+
+// const users = new mongoose.Schema({
+//   username: {type: String, required: true, unique: true},
+//   password: {type: String, required: true},
+//   email: {type: String},
+//   role: {type: String, required:true, default:'user', enum:['admin','editor','user'] },
+// });
 
 router.get('/books', handleGetAll);
 router.get('/books/:id', handleGetOne);
